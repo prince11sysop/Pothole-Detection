@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "234112774788",
+    "firebase_url": "https://team-enigma-6313e.firebaseio.com",
+    "project_id": "team-enigma-6313e",
+    "storage_bucket": "team-enigma-6313e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234112774788:android:097bff0aacf04c656a88d1",
+        "android_client_info": {
+          "package_name": "teamenigma.com.potholedetection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234112774788-n1cir188924srqlqskpafnjijo5tnb9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teamenigma.com.potholedetection",
+            "certificate_hash": "18a26f83db08f69d282547d04c1a6ebe61ea45e0"
+          }
+        },
+        {
+          "client_id": "234112774788-otvumu1ckrrmbav5tqraor4avuq1v8s3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYp_fWY-unP4i_UtLQRANkhZnLaIckhyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234112774788-otvumu1ckrrmbav5tqraor4avuq1v8s3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
