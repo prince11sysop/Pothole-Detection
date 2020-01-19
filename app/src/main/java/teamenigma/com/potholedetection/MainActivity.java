@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                startActivity(new Intent(MainActivity.this,MapsActivity.class));
+                startActivity(new Intent(MainActivity.this,PotholeReportActivity.class));
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
