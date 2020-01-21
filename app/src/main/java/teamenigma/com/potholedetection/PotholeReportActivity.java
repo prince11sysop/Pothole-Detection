@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -45,8 +46,12 @@ public class PotholeReportActivity extends AppCompatActivity {
     public static final String ALLOW_KEY = "ALLOWED";
     public static final String CAMERA_PREF = "camera_pref";
     ImageView img;
+    public String severinity , traffic, uid = " " , postalCode = " ", state = " ";
+    public String URL=" ",status = " ";
+    UserData userData;
     StorageReference mStorageRef;
     DatabaseReference dfref ;
+    Task<Uri> result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,22 +76,41 @@ public class PotholeReportActivity extends AppCompatActivity {
         sevSpinner.setAdapter(adapter);
         trafficSpinner.setAdapter(adapter);
 
+        sevSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                severinity = (String) parent.getItemAtPosition(position);
+                // Notify the selected item text
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        trafficSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                traffic = (String) parent.getItemAtPosition(position);
+                // Notify the selected item text
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(PotholeReportActivity.this,PotholeReportActivity.class));
 
                 if (ContextCompat.checkSelfPermission(PotholeReportActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     if (getFromPref(PotholeReportActivity.this, ALLOW_KEY)) {
                         showSettingsAlert();
-                        //openCamera();
                     } else if (ContextCompat.checkSelfPermission(PotholeReportActivity.this,
                             Manifest.permission.CAMERA)
 
                             != PackageManager.PERMISSION_GRANTED) {
-
-                        // Should we show an explanation?
                         if (ActivityCompat.shouldShowRequestPermissionRationale(PotholeReportActivity.this,
                                 Manifest.permission.CAMERA)) {
                             showAlert();
@@ -95,12 +119,36 @@ public class PotholeReportActivity extends AppCompatActivity {
                             ActivityCompat.requestPermissions(PotholeReportActivity.this,
                                     new String[]{Manifest.permission.CAMERA},
                                     MY_PERMISSIONS_REQUEST_CAMERA);
-//                            openCamera();
                         }
                     }
                 } else {
                     openCamera();
                 }
+            }
+        });
+
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String filename = System.currentTimeMillis()+" ";
+                while (!result.isSuccessful());
+                        URL = result.getResult().toString();
+                        userData = new UserData(uid,postalCode,state,severinity,traffic,URL,status);
+
+                        dfref.child(filename).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful())
+                                    Toast.makeText(PotholeReportActivity.this , "File sucessfully uploaded" , Toast.LENGTH_LONG).show();
+                                else
+                                    Toast.makeText(PotholeReportActivity.this , "File not sucessfully uploaded" , Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                dfref.child(filename).setValue(userData);
+
             }
         });
     }
@@ -197,11 +245,9 @@ public class PotholeReportActivity extends AppCompatActivity {
         Bitmap bitmap;
 
         if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA) {
-            bitmap = (Bitmap) data.getExtras().get("data");
 
-
-//            if (bitmap != null) {
             if(resultCode == Activity.RESULT_OK){
+                bitmap = (Bitmap) data.getExtras().get("data");
                 img.setImageBitmap(bitmap);
                 final ProgressDialog progressDialoge = new ProgressDialog(this);
                 progressDialoge.setTitle("uploading..");
@@ -224,30 +270,16 @@ public class PotholeReportActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                        Task<Uri> result = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                        while (!result.isSuccessful());
-                        String downloadUrl = result.getResult().toString();
+                        result = taskSnapshot.getMetadata().getReference().getDownloadUrl();
 
-                        dfref.child(filename).setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful())
-                                    Toast.makeText(PotholeReportActivity.this , "File sucessfully uploaded" , Toast.LENGTH_LONG).show();
-                                else
-                                    Toast.makeText(PotholeReportActivity.this , "File not sucessfully uploaded" , Toast.LENGTH_LONG).show();
-
-                            }
-                        });
                         progressDialoge.dismiss();
-                        //Log.d("downloadUrl-->", "" + downloadUrl);
+//                        //Log.d("downloadUrl-->", "" + downloadUrl);
                     }
                 });
             } else {
-                Toast.makeText(PotholeReportActivity.this , "File not sucessfully uploaded" , Toast.LENGTH_LONG).show();
+                Toast.makeText(PotholeReportActivity.this , "Photo not Taken." , Toast.LENGTH_LONG).show();
 
             }
-        } else{
-
         }
     }
 
