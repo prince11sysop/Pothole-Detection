@@ -30,7 +30,7 @@ public class LocationActivity extends AppCompatActivity
 
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
-    PendingResult<LocationSettingsResult> result;
+    PendingResult<LocationSettingsResult> pendingResult;
     final static int REQUEST_LOCATION = 199;
     TextView latTextView, lonTextView,addTextView;
 
@@ -69,9 +69,9 @@ public class LocationActivity extends AppCompatActivity
                 .addLocationRequest(mLocationRequest);
         builder.setAlwaysShow(true);
 
-        result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+        pendingResult = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
 
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
             @Override
             public void onResult(LocationSettingsResult result) {
                 final Status status = result.getStatus();
