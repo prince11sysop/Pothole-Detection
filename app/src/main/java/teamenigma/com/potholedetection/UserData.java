@@ -21,6 +21,7 @@ public class UserData {
     public String potholeAddress;
     public String potholeLatitude;
     public String potholeLongitude;
+    public String numOfTimesReported;
 
 
 
@@ -29,7 +30,8 @@ public class UserData {
     }
 
     public UserData(String uid, String areacode, String state,String sev, String traffic,String url,
-                    String status,String potholeAddress,String potholeLatitude,String potholeLongitude){
+                    String status,String potholeAddress,String potholeLatitude,String potholeLongitude,
+                    String numOfTimesReported){
         this.userId = uid;
         this.postalCode = areacode;
         this.state = state;
@@ -42,6 +44,7 @@ public class UserData {
         this.potholeAddress=potholeAddress;
         this.potholeLatitude=potholeLatitude;
         this.potholeLongitude=potholeLongitude;
+        this.numOfTimesReported=numOfTimesReported;
     }
 
     public String getUserId() {
@@ -90,5 +93,13 @@ public class UserData {
 
     public String getPotholeLongitude() {
         return potholeLongitude;
+    }
+
+    public String getNumOfTimesReported() {
+        return numOfTimesReported;
+    }
+
+    public void setNumOfTimesReported(String numOfTimesReported) {
+        this.numOfTimesReported = numOfTimesReported;
     }
 }

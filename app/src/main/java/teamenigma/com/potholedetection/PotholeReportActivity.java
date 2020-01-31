@@ -71,6 +71,7 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
     public String severinity , traffic="", uid = " " , postalCode = " ", state = " ";
     public String URL=" ",status = "Pending";
     public String potholeAddress="",potholeLatitude="",potholeLongitude="";
+    public String numOfTimesPotholeReported="1";
 
     UserData userData;
     StorageReference mStorageRef;
@@ -159,7 +160,8 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
 
                 while (!result.isSuccessful());
                         URL = result.getResult().toString();
-                        userData = new UserData(uid,postalCode,state,severinity,traffic,URL,status,potholeAddress,potholeLatitude,potholeLongitude);
+                        userData = new UserData(uid,postalCode,state,severinity,traffic,URL,status,potholeAddress,
+                                potholeLatitude,potholeLongitude,numOfTimesPotholeReported);
 
                         dfref.child(filename).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
