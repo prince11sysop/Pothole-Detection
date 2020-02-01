@@ -98,8 +98,8 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
         trafficSpinner = findViewById(R.id.trafficSpinner);
         String[] items = new String[]{"High", "Medium", "Low"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_text, items);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         sevSpinner.setAdapter(adapter);
         trafficSpinner.setAdapter(adapter);
 

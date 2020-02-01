@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GpsTracker"></activity>
+        <activity android:name=".PotholeDetails"></activity>
+        <activity android:name=".GpsTracker" />
         <activity android:name=".LocationActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

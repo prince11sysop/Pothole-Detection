@@ -25,9 +25,7 @@
     <string name="login_failed">"Login failed"</string>
 
 
-
     <string name="get_last_location">GET LAST LOCATION</string>
-
 
 
     <string name="latitude_label">Latitude</string>

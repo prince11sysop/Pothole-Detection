@@ -67,7 +67,8 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
     }
 
 
-    public static class MyReportsViewHolder extends RecyclerView.ViewHolder {
+//    public static class MyReportsViewHolder extends RecyclerView.ViewHolder {
+    public class MyReportsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mPic;
         TextView mAuthName;
@@ -84,6 +85,8 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
                 @Override
                 public void onClick(View v) {
 
+                    myContext.startActivity(new Intent(myContext,PotholeDetails.class));
+//                    startActivity(new Intent(this,PotholeDetails.class));
                 }
             });
         }
