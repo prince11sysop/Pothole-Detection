@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.location.LocationRequest;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
     DatabaseReference mMessagesDatabaseReference;
     RecyclerView recyclerView;
     GridLayoutManager layoutManager;
+    List<UserData> friendlyMessages;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,11 +43,12 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mMessagesDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Potholes");
+        mMessagesDatabaseReference.keepSynced(true);
         recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
 
 
-        final List<UserData> friendlyMessages = new ArrayList<>();
+        friendlyMessages = new ArrayList<>();
         layoutManager = new GridLayoutManager(getContext(), 1);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -70,7 +73,6 @@ public class HomeFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
 
 
         return root;

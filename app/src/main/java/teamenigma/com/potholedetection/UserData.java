@@ -22,6 +22,8 @@ public class UserData {
     public String potholeLatitude;
     public String potholeLongitude;
     public String numOfTimesReported;
+    public String uploadKey;
+    public String isItPothole;
 
 
 
@@ -29,11 +31,11 @@ public class UserData {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public UserData(String uid, String areacode, String state,String sev, String traffic,String url,
+    public UserData(String uid, String postalCode, String state,String sev, String traffic,String url,
                     String status,String potholeAddress,String potholeLatitude,String potholeLongitude,
-                    String numOfTimesReported){
+                    String numOfTimesReported, String uploadKey,String isItPothole){
         this.userId = uid;
-        this.postalCode = areacode;
+        this.postalCode = postalCode;
         this.state = state;
         this.traffic = traffic;
         this.imageURL = url;
@@ -45,6 +47,8 @@ public class UserData {
         this.potholeLatitude=potholeLatitude;
         this.potholeLongitude=potholeLongitude;
         this.numOfTimesReported=numOfTimesReported;
+        this.uploadKey=uploadKey;
+        this.isItPothole=isItPothole;
     }
 
     public String getUserId() {
@@ -101,5 +105,21 @@ public class UserData {
 
     public void setNumOfTimesReported(String numOfTimesReported) {
         this.numOfTimesReported = numOfTimesReported;
+    }
+
+    public String getUploadKey() {
+        return uploadKey;
+    }
+
+    public void setUploadKey(String uploadKey) {
+        this.uploadKey = uploadKey;
+    }
+
+    public String getIsItPothole() {
+        return isItPothole;
+    }
+
+    public void setIsItPothole(String isItPothole) {
+        this.isItPothole = isItPothole;
     }
 }

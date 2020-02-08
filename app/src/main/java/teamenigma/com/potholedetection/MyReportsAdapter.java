@@ -14,12 +14,14 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyReportsViewHolder> {
 
     private Context myContext;
     private List<UserData> placementList;
+    public static String potholeLocation,dateReportedOn,imageUrl,currentStatus,traffic,severity,freq;
 
     public MyReportsAdapter(Context myContext, List<UserData> placementList){
         this.myContext = myContext;
@@ -37,18 +39,24 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyReportsViewHolder placementViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final MyReportsViewHolder myReportsViewHolder, final int position) {
 
-        final UserData placement = placementList.get(position);
+        final UserData userData = placementList.get(position);
 
-        placementViewHolder.mAuthName.setText(placement.traffic);
+        myReportsViewHolder.mAuthName.setText(userData.potholeAddress);
 
         Glide.with(myContext)
-                .load(placement.imageURL)
+                .load(userData.imageURL)
                 .apply(new RequestOptions()
                         .placeholder(R.mipmap.ic_launcher)
                         .fitCenter())
-                .into(placementViewHolder.mPic);
+                .into(myReportsViewHolder.mPic);
+
+        myReportsViewHolder.traffic.setText(userData.traffic);
+        myReportsViewHolder.currStatus.setText(userData.status);
+        myReportsViewHolder.reportDate.setText(userData.currentDate);
+        myReportsViewHolder.severity.setText(userData.severinity);
+        myReportsViewHolder.freq.setText("This pothole has been reported total of "+userData.numOfTimesReported+" times!");
 
 
 //        placementViewHolder.mPic.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +66,21 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
 //                myContext.startActivity(new Intent(myContext, ImageFullScreen.class));
 //            }
 //        });
+        myReportsViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageUrl=userData.imageURL;
+                potholeLocation=userData.potholeAddress;
+                dateReportedOn=userData.currentDate;
+                traffic=userData.traffic;
+                currentStatus=userData.status;
+                severity=userData.severinity;
+                freq=userData.numOfTimesReported;
+
+                myContext.startActivity(new Intent(myContext,PotholeDetails.class));
+            }
+        });
+
     }
 
 
@@ -71,13 +94,20 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
     public class MyReportsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mPic;
-        TextView mAuthName;
+        TextView mAuthName, reportDate,currStatus, traffic,severity,freq;
+        CardView cardView;
 
 
         public MyReportsViewHolder(@NonNull final View itemView) {
             super(itemView);
             mAuthName = itemView.findViewById(R.id.address);
             mPic= itemView.findViewById(R.id.pic);
+            reportDate= itemView.findViewById(R.id.date);
+            currStatus= itemView.findViewById(R.id.currentStatus);
+            traffic= itemView.findViewById(R.id.traffic);
+            severity= itemView.findViewById(R.id.severity);
+            freq=itemView.findViewById(R.id.freq);
+            cardView=itemView.findViewById(R.id.cardView);
 
             itemView.setTag(getAdapterPosition());
 
@@ -85,7 +115,7 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
                 @Override
                 public void onClick(View v) {
 
-                    myContext.startActivity(new Intent(myContext,PotholeDetails.class));
+//                    myContext.startActivity(new Intent(myContext,PotholeDetails.class));
 //                    startActivity(new Intent(this,PotholeDetails.class));
                 }
             });

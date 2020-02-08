@@ -6,41 +6,181 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        android:layout_gravity="center"
-        android:elevation="1dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="4dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="15dp"
-        android:padding="15dp"
-        tools:cardBackgroundColor="@color/grey60"
-        tools:cardCornerRadius="4dp">
+        android:elevation="0.5dp"
+        android:background="@drawable/image_background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <ImageView
-                android:id="@+id/pic"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:minHeight="200dp"
-                android:maxHeight="300dp"
-                android:layout_marginBottom="0dp"
-                />
+                android:orientation="horizontal">
 
+                <RelativeLayout
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="150dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/pic"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitXY" />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Traffic: "
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+
+
+                        <TextView
+                            android:id="@+id/traffic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Severity: "
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+
+
+                        <TextView
+                            android:id="@+id/severity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Current Status: "
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+
+
+                        <TextView
+                            android:id="@+id/currentStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+
+                        <RelativeLayout
+                            android:id="@+id/statusIndicator"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/green"></RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#4b4b4b"
+                            android:text="Date Reported on: "
+                            android:textSize="15sp"/>
+
+
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/freq"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="#4b4b4b"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height=".75dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#B3B2B2"></RelativeLayout>
             <TextView
                 android:id="@+id/address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Pothole Address"
+                android:maxLines="2"
                 android:textAlignment="center"
                 android:textSize="15sp"
                 android:textColor="#4b4b4b"

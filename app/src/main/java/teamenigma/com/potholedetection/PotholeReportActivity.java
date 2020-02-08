@@ -2,6 +2,7 @@ package teamenigma.com.potholedetection;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -16,6 +17,7 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -42,16 +44,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class PotholeReportActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+public class PotholeReportActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
 
@@ -75,23 +83,36 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
 
     UserData userData;
     StorageReference mStorageRef;
-    DatabaseReference dfref;
     Task<Uri> result;
+
+    DatabaseReference databaseReference;
+
+    String uploadKey=null;
+    double minDist=Integer.MAX_VALUE;
+    int flag=0;
+    List<UserData> potholesDetails;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pothole_report);
+        Toolbar toolbar =findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Potholes");
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        dfref = FirebaseDatabase.getInstance().getReference();
-
         uploadImageButton = (Button) findViewById(R.id.takeImageButton);
         reportButton = (Button) findViewById(R.id.reportButton);
         img = (ImageView) findViewById(R.id.potholeImage);
-
-
-        buildGoogleApiClient();
 
         //get the spinner from the xml.
         sevSpinner = findViewById(R.id.severinitySpinner);
@@ -102,7 +123,6 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
         sevSpinner.setAdapter(adapter);
         trafficSpinner.setAdapter(adapter);
-
         sevSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -126,6 +146,8 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
             }
         });
 
+
+        buildGoogleApiClient();
 
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,33 +174,44 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
             }
         });
 
+
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final String filename = System.currentTimeMillis()+" ";
+                //if it is in radius of 10m to any previous pothole, just increase it count, else create a new report
+                if (minDist < 11.00) {
+                    if(uploadKey!=null)
+                          databaseReference.child(uploadKey).child("numOfTimesReported").setValue("1000");
 
-                while (!result.isSuccessful());
-                        URL = result.getResult().toString();
-                        userData = new UserData(uid,postalCode,state,severinity,traffic,URL,status,potholeAddress,
-                                potholeLatitude,potholeLongitude,numOfTimesPotholeReported);
+                    } else {
 
-                        dfref.child(filename).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful())
-                                    Toast.makeText(PotholeReportActivity.this , "File sucessfully uploaded" , Toast.LENGTH_LONG).show();
-                                else
-                                    Toast.makeText(PotholeReportActivity.this , "File not sucessfully uploaded" , Toast.LENGTH_LONG).show();
+                    final String filename = System.currentTimeMillis() + " ";
+                    while (!result.isSuccessful()) ;
+                    URL = result.getResult().toString();
+                    userData = new UserData(uid, postalCode, state, severinity, traffic, URL, status, potholeAddress,
+                            potholeLatitude, potholeLongitude, numOfTimesPotholeReported, filename,"yes");
 
-                            }
-                        });
+                    databaseReference.child(filename).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful())
+                                Toast.makeText(PotholeReportActivity.this, "Image uploaded successfully", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(PotholeReportActivity.this, "Failed to upload the Image!", Toast.LENGTH_LONG).show();
 
-                dfref.child(filename).setValue(userData);
+                        }
+                    });
 
+                    databaseReference.child(filename).setValue(userData);
+
+                    Toast.makeText(PotholeReportActivity.this, "Distance more than 10m", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
     }
+
 
 
     private void showAlert() {
@@ -232,7 +265,6 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
                         startInstalledAppDetailsActivity(PotholeReportActivity.this);
                     }
                 });
-
         alertDialog.show();
     }
 
@@ -247,9 +279,8 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
     }
 
     public static void startInstalledAppDetailsActivity(final Activity context) {
-        if (context == null) {
+        if (context == null)
             return;
-        }
 
         final Intent i = new Intent();
         i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -276,9 +307,11 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
             if(resultCode == Activity.RESULT_OK){
                 bitmap = (Bitmap) data.getExtras().get("data");
                 img.setImageBitmap(bitmap);
-                final ProgressDialog progressDialoge = new ProgressDialog(this);
-                progressDialoge.setTitle("uploading..");
-                progressDialoge.show();
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Uploading image...");
+                progressDialog.setTitle("Please Wait");
+                progressDialog.show();
+                progressDialog.setCancelable(false);
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -290,7 +323,7 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        progressDialoge.dismiss();
+                        progressDialog.dismiss();
                         Toast.makeText(PotholeReportActivity.this,  "Not Added!", Toast.LENGTH_LONG).show();
                         // Handle unsuccessful uploads
                     }
@@ -300,16 +333,14 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
                         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                         result = taskSnapshot.getMetadata().getReference().getDownloadUrl();
 
-                        progressDialoge.dismiss();
+                        progressDialog.dismiss();
 //                        //Log.d("downloadUrl-->", "" + downloadUrl);
                     }
                 });
             } else {
                 Toast.makeText(PotholeReportActivity.this , "Photo not Taken." , Toast.LENGTH_LONG).show();
-
             }
         }
-
 
         //final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
         switch (requestCode){
@@ -327,7 +358,6 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
                             new GpsTracker(this).getLongitude();
                         }
                         updateLocation();
-
                         break;
                     }
                     case Activity.RESULT_CANCELED:{
@@ -378,7 +408,6 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
                     case LocationSettingsStatusCodes.SUCCESS:
                         // All location settings are satisfied. The client can initialize location
                         // requests here.
-                        //...
                         updateLocation();
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -404,21 +433,76 @@ public class PotholeReportActivity extends AppCompatActivity implements GoogleAp
 
     }
 
+//    to get the nearest coordinate
+    public void getNearestCoordinate(Location location) {
+
+        potholesDetails = new ArrayList<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    UserData studentDetails = dataSnapshot.getValue(UserData.class);
+                    potholesDetails.add(studentDetails);
+                }
+                flag=1;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
+        int index=-1;
+
+        for(int i=0;i<potholesDetails.size();i++){
+            double latitude,longitude;
+            latitude=Double.parseDouble(potholesDetails.get(i).potholeLatitude);
+            longitude=Double.parseDouble(potholesDetails.get(i).potholeLongitude);
+
+            Location location2=new Location("");
+            location2.setLatitude(latitude);
+            location2.setLongitude(longitude);
+
+            double currDist=location.distanceTo(location2);
+
+            if(currDist<minDist);{
+                minDist=currDist;
+                index=i;
+            }
+        }
+
+        if(index!=-1)
+            uploadKey=potholesDetails.get(index).uploadKey;
+
+//        Toast.makeText(this, "Min dist: "+minDist, Toast.LENGTH_SHORT).show();
+    }
+
 
     public void updateLocation(){
         GpsTracker gps = new GpsTracker(PotholeReportActivity.this);
         double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
 
+//        Location location=new Location("");
+//        location.setLongitude(longitude);
+//        location.setLatitude(latitude);
+//
+
         HashMap<String,String> addressMap=gps.getCompleteAddressString(latitude,longitude);
-
         postalCode=addressMap.get("postalCode");
-
         potholeLatitude=latitude+"";
         state=addressMap.get("state");
         potholeLongitude=longitude+"";
+        potholeAddress=addressMap.get("address");
 
         Toast.makeText(PotholeReportActivity.this, "Latitude: "+latitude+" Longitude: "+longitude, Toast.LENGTH_SHORT).show();
+
+
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package teamenigma.com.potholedetection;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,6 +40,10 @@ public class GpsTracker extends Service implements LocationListener {
     double latitude; // latitude
     double longitude; // longitude
 
+    public PotholeReportActivity activity;
+
+
+
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
@@ -52,6 +57,7 @@ public class GpsTracker extends Service implements LocationListener {
         this.mContext = context;
         getLocation();
     }
+
 
 
     public Location getLocation() {
@@ -83,6 +89,8 @@ public class GpsTracker extends Service implements LocationListener {
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
+                        }else{
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
                         }
                     }
                 }
@@ -110,6 +118,7 @@ public class GpsTracker extends Service implements LocationListener {
         }
         return location;
     }
+
 
     /**
      * Stop using GPS listener Calling this function will stop using GPS in your
@@ -146,7 +155,7 @@ public class GpsTracker extends Service implements LocationListener {
 
         Geocoder geocoder;
         List<Address> addresses=new ArrayList<>();
-        geocoder = new Geocoder(this, Locale.getDefault());
+        geocoder = new Geocoder(mContext, Locale.getDefault());
 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
@@ -174,6 +183,7 @@ public class GpsTracker extends Service implements LocationListener {
                 addressMap.put("knownName",knownName);
                 addressMap.put("subAdmin",subAdmin);
 
+//                new HttpAsyncTask().execute("http://0c8080cb.ngrok.io");
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
