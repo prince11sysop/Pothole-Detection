@@ -21,8 +21,11 @@
 
 <!--    <color name="white">#ffffff</color>-->
     <color name="white80">#80ffffff</color>
-
     <color name="cardGreen">#a4c639</color>
+
+    <color name="colorGradientStart">#1794CC</color>
+    <color name="colorGradientCenter">#17589E</color>
+    <color name="colorGradientEnd">#042E6B</color>
 
 
     <!-- intro slider Screens background color-->

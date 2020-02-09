@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#9aceff"
+    tools:context=".GoogleAuth.Login">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:layout_alignParentBottom="true"
+            android:src="@color/colorAccent">
+        </ImageView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#B5000000"></RelativeLayout>
+
+    </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome To"
+            android:layout_marginTop="130dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/OpenSansTextStyle"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_alignParentTop="true"></TextView>
+
+      <LinearLayout
+          android:id="@+id/alumni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          android:layout_below="@id/welcome"
+           android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+         <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:layout_marginLeft="50dp"
+              android:layout_marginRight="50dp"
+             android:layout_marginBottom="2dp"
+              android:background="@color/white"></RelativeLayout>
+        <TextView
+            android:id="@+id/alum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PWD"
+            android:textAlignment="center"
+            android:textAppearance="@style/bebasRegular"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            ></TextView>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Government Of Goa"
+              android:textAlignment="center"
+              android:textAppearance="@style/bebasRegular"
+              android:textColor="@color/white"
+              android:textSize="30sp"></TextView>
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:layout_marginLeft="50dp"
+              android:layout_marginRight="50dp"
+              android:layout_marginTop="2dp"
+              android:background="@color/white"></RelativeLayout>
+        </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/govt_logo"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/alumni"></ImageView>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_login_google"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp"
+        android:padding="4dp"
+        android:textSize="20sp"
+        android:textStyle="bold"></com.google.android.gms.common.SignInButton>
+
+</RelativeLayout>

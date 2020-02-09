@@ -44,11 +44,15 @@
 
             <ImageView
                 android:id="@+id/potholeImage"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:maxHeight="300dp"
+                android:layout_marginTop="5dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="12dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="5dp"
                 android:src="@drawable/ic_menu_camera" />
 
             <Button
@@ -57,9 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
-                android:padding="15dp"
+                android:padding="4dp"
                 android:text="Take Image"
-                android:background="@drawable/my_button_bg"
+                android:background="@drawable/gradient"
                 android:textColor="#fff"
                 android:textSize="15dp"
                 />
@@ -78,7 +82,7 @@
                     android:gravity="center_vertical"
                     android:layout_weight="2"
                     android:textColor="#000"
-                    android:text="Severenity"
+                    android:text="Severity"
                     android:textSize="18sp"
                     />
 
@@ -101,7 +105,7 @@
                         android:layout_marginTop="20dp"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dialog" />
 
                     <ImageView
                         android:layout_width="45dp"
@@ -178,9 +182,9 @@
                 android:layout_margin="20dp"
                 android:layout_marginTop="40dp"
                 android:text="Report"
-                android:padding="8dp"
+                android:padding="4dp"
                 android:textSize="15dp"
-                android:background="@drawable/my_button_bg"
+                android:background="@drawable/gradient"
                 android:textColor="#fff"
                 android:layout_gravity="center_horizontal"/>
 

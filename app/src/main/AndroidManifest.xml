@@ -44,15 +44,22 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".PotholeReportActivity" />
+        <activity android:name=".GeoLocation.LocationMainActivity" />
+        <activity android:name=".GoogleAuth.Login" />
+        <activity android:name=".IntroSlider.WelcomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PotholeReportActivity" />
-        <activity android:name=".GeoLocation.LocationMainActivity" />
-        <activity android:name=".IntroSlider.WelcomeActivity" />
     </application>
 
 </manifest>

@@ -15,12 +15,15 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -67,6 +70,7 @@ import javax.net.ssl.HttpsURLConnection;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import teamenigma.com.potholedetection.MainActivity;
@@ -101,7 +105,7 @@ public class LocationMainActivity extends Activity {
     Spinner sevSpinner,trafficSpinner;
     Button uploadImageButton,reportButton;
     ImageView img;
-    public String severinity , traffic="", uid = " " , postalCode = " ", state = " ";
+    public String severinity , traffic="", uid =MainActivity.userEmail , postalCode = " ", state = " ";
     public String URL=" ",status = "Pending";
     public String potholeAddress="",potholeLatitude="",potholeLongitude="";
     public String numOfTimesPotholeReported="1";
@@ -118,6 +122,10 @@ public class LocationMainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_activity_main);
 
+        Toolbar toolbar =findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+
         mStorageRef = FirebaseStorage.getInstance().getReference();
         uploadImageButton = (Button) findViewById(R.id.takeImageButton);
         reportButton = (Button) findViewById(R.id.reportButton);
@@ -126,17 +134,13 @@ public class LocationMainActivity extends Activity {
         trafficSpinner = findViewById(R.id.trafficSpinner);
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Potholes");
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        fetchData();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(10 * 1000); // 10 seconds
         locationRequest.setFastestInterval(5 * 1000); // 5 seconds
-
-
 
         new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
             @Override
@@ -145,6 +149,10 @@ public class LocationMainActivity extends Activity {
                 isGPS = isGPSEnable;
             }
         });
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Potholes");
+        fetchData();
 
         locationCallback = new LocationCallback() {
             @Override
@@ -239,7 +247,6 @@ public class LocationMainActivity extends Activity {
 
             showCustomDialog();
         });
-
 
         //handling image and adapter
         String[] items = new String[]{"High", "Medium", "Low"};
