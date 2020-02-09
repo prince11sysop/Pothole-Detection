@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".PotholeDetails"
     android:orientation="vertical"
-    android:background="@color/white"
     android:baselineAligned="false">
 
     <androidx.appcompat.widget.Toolbar
@@ -24,7 +23,7 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pothole Details"
+            android:text="Profile"
             android:textSize="16dp"
             android:textAppearance="@style/bebasRegular"
             android:textStyle="bold"/>
@@ -38,6 +37,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/cardView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:elevation="0.5dp"-->
+<!--        android:background="@drawable/image_background">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -191,6 +200,7 @@
                 android:maxLines="2"
                 android:textAlignment="center"
                 android:textSize="15sp"
+                android:textColor="#4b4b4b"
                 android:padding="8dp"
                 />
             <RelativeLayout
@@ -211,20 +221,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Current Status: "
-            android:textStyle="bold"
             android:layout_gravity="center_vertical"
             android:textColor="#4b4b4b"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
 
         <TextView
             android:id="@+id/currentStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_gravity="center_vertical"
             android:textColor="#4b4b4b"
-            android:textSize="16sp"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -237,7 +245,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="10dp"
-        android:background="@drawable/gradient"
+        android:background="@drawable/image_background"
         android:layout_gravity="bottom"
         android:gravity="bottom"
         >
@@ -249,17 +257,21 @@
             android:padding="8dp"
             android:minLines="2"
             android:layout_weight="5"
-            android:textColor="#fff"
-            android:text="This pothole has been fixed by the respective municipality. If not Fixed, Click here to report a complain to higher officials."
+            android:textColor="#4b4b4b"
+            android:text="This pothole has been fixed by the respective municipality. If not Fixed, Click side button to report a complain to higher officials."
             android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/reReportButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="8dp"
+            android:textSize="13dp"
+            android:textColor="#000"
+            android:padding="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/complain"
+            android:background="@drawable/ic_menu_camera"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"/>
     </LinearLayout>

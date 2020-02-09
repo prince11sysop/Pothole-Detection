@@ -41,7 +41,7 @@ public class UserData {
         this.imageURL = url;
         this.severinity = sev;
         this.status = status;
-        this.currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        this.currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
         this.currentTime = new SimpleDateFormat("hh : mm a", Locale.getDefault()).format(Calendar.getInstance().getTime());
         this.potholeAddress=potholeAddress;
         this.potholeLatitude=potholeLatitude;

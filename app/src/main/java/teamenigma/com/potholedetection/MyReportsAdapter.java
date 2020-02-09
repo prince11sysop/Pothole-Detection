@@ -21,11 +21,12 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
 
     private Context myContext;
     private List<UserData> placementList;
-    public static String potholeLocation,dateReportedOn,imageUrl,currentStatus,traffic,severity,freq;
+    public static String potholeLocation,dateReportedOn,imageUrl,currentStatus,traffic,severity,freq, uploadKey;
 
 
     public MyReportsAdapter(Context myContext, List<UserData> placementList){
         this.myContext = myContext;
+    ComplainDetails complainDetails;
         this.placementList = placementList;
     }
 
@@ -77,6 +78,7 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
                 currentStatus=userData.status;
                 severity=userData.severinity;
                 freq=userData.numOfTimesReported;
+                uploadKey = userData.uploadKey;
 
                 myContext.startActivity(new Intent(myContext,PotholeDetails.class));
             }
@@ -95,7 +97,7 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
     public class MyReportsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mPic;
-        TextView mAuthName, reportDate,currStatus, traffic,severity,freq;
+        TextView mAuthName, reportDate,currStatus, traffic,severity,freq,uploadKey;
         CardView cardView;
 
 
