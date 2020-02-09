@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HttpPostRequest"></activity>
+        <activity android:name=".reReportComplaintActivity"></activity>
+        <activity android:name=".HttpPostRequest" />
         <activity android:name=".PotholeDetails" />
         <activity android:name=".GpsTracker" />
         <activity android:name=".LocationActivity" />

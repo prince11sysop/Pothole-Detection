@@ -1,8 +1,8 @@
 package teamenigma.com.potholedetection;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -29,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -54,7 +56,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +94,7 @@ public class PotholeReportActivity extends Activity implements GoogleApiClient.C
     List<UserData> potholesDetails;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,9 +184,9 @@ public class PotholeReportActivity extends Activity implements GoogleApiClient.C
                 //if it is in radius of 10m to any previous pothole, just increase it count, else create a new report
                 if (minDist < 11.00) {
                     if(uploadKey!=null)
-                          databaseReference.child(uploadKey).child("numOfTimesReported").setValue("1000");
+                        databaseReference.child(uploadKey).child("numOfTimesReported").setValue("1000");
 
-                    } else {
+                } else {
 
                     final String filename = System.currentTimeMillis() + " ";
                     while (!result.isSuccessful()) ;
@@ -433,7 +435,7 @@ public class PotholeReportActivity extends Activity implements GoogleApiClient.C
 
     }
 
-//    to get the nearest coordinate
+    //    to get the nearest coordinate
     public void getNearestCoordinate(Location location) {
 
         potholesDetails = new ArrayList<>();

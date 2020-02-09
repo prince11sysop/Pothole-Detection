@@ -303,7 +303,14 @@ public class LocationMainActivity extends Activity {
 
         okButton=(Button)view.findViewById(R.id.buttonOk);
 
-        okButton.setOnClickListener(v -> startActivity(new Intent(LocationMainActivity.this, MainActivity.class)));
+        okButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(LocationMainActivity.this, MainActivity.class));
+                                        }
+                                    });
+
+//        okButton.setOnClickListener(v -> startActivity(new Intent(LocationMainActivity.this, MainActivity.class)));
 
     }
 
