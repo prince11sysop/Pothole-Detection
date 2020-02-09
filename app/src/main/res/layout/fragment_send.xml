@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +29,6 @@
                 android:id="@+id/aboutTextView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Government of Goa, India"
                 android:textSize="15dp"
                 android:fitsSystemWindows="true"
@@ -39,8 +39,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/aboutTextView1"
                 android:text="Public Works Department"
-                android:textSize="20dp"
+                android:textSize="23dp"
+                android:textColor="@color/black"
                 android:textFontWeight="1"
+
                 android:fitsSystemWindows="true"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
@@ -51,11 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logoLayout"
+        android:layout_marginTop="99dp"
+        android:layout_marginBottom="15dp"
         android:text="The Public Works Department plays a major role in the economic, commercial and touristic development of the State of Goa."
-        android:layout_marginTop="30dp"
-        android:textSize="20dp"
-        android:layout_margin="15dp"
-        android:textAlignment="inherit"/>
+        android:textAlignment="inherit"
+        android:textSize="20dp" />
 
 
 </RelativeLayout>

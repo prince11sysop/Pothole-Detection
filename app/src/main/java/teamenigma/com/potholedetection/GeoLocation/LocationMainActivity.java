@@ -299,14 +299,15 @@ public class LocationMainActivity extends Activity {
 
         //then we will inflate the custom alert dialog xml that we created
         LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-        View view = inflater.inflate(R.layout.my_dialog, null, false);
+        View view = inflater.inflate(R.layout.my_dialog, null);
 
         okButton=(Button)view.findViewById(R.id.buttonOk);
 
         okButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            startActivity(new Intent(LocationMainActivity.this, MainActivity.class));
+//                                            startActivity(new Intent(LocationMainActivity.this, MainActivity.class));
+                                            finish();
                                         }
                                     });
 
