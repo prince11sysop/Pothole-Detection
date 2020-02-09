@@ -23,6 +23,7 @@ public class MyReportsAdapter extends RecyclerView.Adapter<MyReportsAdapter.MyRe
     private List<UserData> placementList;
     public static String potholeLocation,dateReportedOn,imageUrl,currentStatus,traffic,severity,freq;
 
+
     public MyReportsAdapter(Context myContext, List<UserData> placementList){
         this.myContext = myContext;
         this.placementList = placementList;
